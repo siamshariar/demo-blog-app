@@ -90,7 +90,7 @@ export default async function BlogDetailISRPage({ searchParams }: PageProps) {
         </article>
 
         {/* ISR Info */}
-        <div className="mt-10 bg-blue-50 border border-blue-200 rounded-lg p-6">
+        {/* <div className="mt-10 bg-blue-50 border border-blue-200 rounded-lg p-6">
           <h3 className="font-semibold text-black mb-2">ISR Demo</h3>
           <p className="text-sm text-gray-600 mb-4">
             This page uses Incremental Static Regeneration with 20-second revalidation.
@@ -102,7 +102,7 @@ export default async function BlogDetailISRPage({ searchParams }: PageProps) {
           <p className="text-sm text-green-600 font-medium">
             ⚡ Prefetching, this page loads instantly when you click the link!
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
