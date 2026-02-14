@@ -14,11 +14,11 @@ export async function getBlogList(page: number = 1, limit: number = 20): Promise
   // Simulate network delay
   await new Promise((resolve) => setTimeout(resolve, 100));
 
-  // Generate infinite demo data
+  // Generate infinite demo data - increased to 10,000 items
   const startIndex = (page - 1) * limit;
   const endIndex = startIndex + limit;
 
-  const allPosts = Array.from({ length: 1000 }).map((_, i) => ({
+  const allPosts = Array.from({ length: 10000 }).map((_, i) => ({
     id: `post-${i + 1}`,
     title: `Blog Post #${i + 1}: The Future of Textiles`,
     content: "This is a summary of the blog post...",
