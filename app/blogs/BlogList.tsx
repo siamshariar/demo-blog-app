@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { BlogPost } from '@/lib/api';
 
@@ -18,24 +18,36 @@ export default function BlogList() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  // Use ref to track current page for API calls to avoid stale closures
+  const currentPageRef = useRef(1);
+
   const loadMorePosts = useCallback(async () => {
     if (loading || !hasMore) return;
 
     setLoading(true);
     try {
-      const newPosts = await fetchBlogs(page, 20);
+      const newPosts = await fetchBlogs(currentPageRef.current, 20);
       if (newPosts.length === 0) {
         setHasMore(false);
       } else {
         setPosts(prev => [...prev, ...newPosts]);
         setPage(prev => prev + 1);
+        currentPageRef.current += 1;
       }
     } catch (error) {
       console.error('Error loading posts:', error);
     } finally {
       setLoading(false);
     }
-  }, [page, loading, hasMore]);
+  }, [loading, hasMore]);
+
+  // Use ref to store the latest loadMorePosts function
+  const loadMorePostsRef = useRef(loadMorePosts);
+  
+  // Update the ref whenever loadMorePosts changes
+  useEffect(() => {
+    loadMorePostsRef.current = loadMorePosts;
+  }, [loadMorePosts]);
 
   useEffect(() => {
     loadMorePosts();
@@ -45,7 +57,7 @@ export default function BlogList() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasMore && !loading) {
-          loadMorePosts();
+          loadMorePostsRef.current();
         }
       },
       { threshold: 1.0 }
@@ -61,7 +73,7 @@ export default function BlogList() {
         observer.unobserve(sentinel);
       }
     };
-  }, [loadMorePosts, hasMore, loading]);
+  }, [hasMore, loading]);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
