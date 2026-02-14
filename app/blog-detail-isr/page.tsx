@@ -100,7 +100,7 @@ export default async function BlogDetailISRPage({ searchParams }: PageProps) {
             Page generated at: {generationTime}
           </p>
           <p className="text-sm text-green-600 font-medium">
-            ⚡ Thanks to prefetching, this page loads instantly when you click the link!
+            ⚡ Prefetching, this page loads instantly when you click the link!
           </p>
         </div>
       </div>
