@@ -101,7 +101,7 @@ export default function BlogListISR() {
               }}
               onClick={() => console.log(`📖 Navigating to post: ${post.id}`)}
             >
-              Read More {prefetchingPost === post.id && <span className="text-green-500">⚡</span>} →
+              Read More {prefetchingPost === post.id && <span className="text-green-500"></span>} →
             </Link>
           </div>
         </div>
